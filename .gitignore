@@ -3,3 +3,4 @@ terraform/SNS/.terraform
 terraform/SQS/.terraform
 terraform/Workspaces/.terraform
 microservices/lambda-gateway/layer
+microservices/lambda-gateway/.serverless
