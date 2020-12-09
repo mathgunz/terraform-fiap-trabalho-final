@@ -1,0 +1,4 @@
+terraform/S3/.terraform
+terraform/SNS/.terraform
+terraform/SQS/.terraform
+terraform/Workspaces/.terraform
