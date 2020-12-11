@@ -1,0 +1,23 @@
+service: trabalho-fiap-lambda-1
+
+provider:
+  name: aws
+  stage: dev
+  runtime: python3.6
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - sqs:ChangeMessageVisibility
+        - sqs:DeleteMessage
+        - sqs:ReceiveMessage
+        - sqs:SendMessage
+        - sqs:GetQueueUrl
+      Resource: "arn:aws:sqs:us-east-1:516773109411:fiap-lab-trabalho-final-dev"
+
+functions:
+  readCustomer:
+    handler: handler.handler
+    events:
+      - http:
+          path: usuarios/{usuario}
+          method: get
