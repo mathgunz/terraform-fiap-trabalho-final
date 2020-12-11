@@ -1,4 +1,4 @@
-service: aws-python3 # NOTE: update this with your service name
+service: trabalho-fiap-lambda-gateway-usuario # NOTE: update this with your service name
 
 provider:
   name: aws
@@ -11,5 +11,5 @@ functions:
     handler: handler.handler
     events:
       - http:
-          path: parametros/{usuario}
+          path: usuarios/{usuario}
           method: get
