@@ -2,10 +2,20 @@ service: trabalho-fiap-lambda-gateway-usuario # NOTE: update this with your serv
 
 provider:
   name: aws
+  stage: dev
   runtime: python3.6
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - sqs:ChangeMessageVisibility
+        - sqs:DeleteMessage
+        - sqs:ReceiveMessage
+        - sqs:SendMessage
+        - sqs:GetQueueUrl
+      Resource: "arn:aws:sqs:us-east-1:516773109411:fiap-lab-trabalho-final-dev"
 
 # you can overwrite defaults here
-stage: production
+# stage: production
 functions:
   readCustomer:
     handler: handler.handler
@@ -13,3 +23,11 @@ functions:
       - http:
           path: usuarios/{usuario}
           method: get
+
+# iamRoleStatements:
+# - Effect: "Allow" # xray permissions (required)
+#   Action:
+#     - "xray:PutTraceSegments"
+#     - "xray:PutTelemetryRecords"
+#   Resource:
+#     - "*"
