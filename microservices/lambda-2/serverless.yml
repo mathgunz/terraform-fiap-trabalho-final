@@ -4,6 +4,7 @@ provider:
   name: aws
   stage: dev
   runtime: python3.6
+  timeout: 300
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -12,7 +13,7 @@ provider:
         - sqs:ReceiveMessage
         - sqs:SendMessage
         - sqs:GetQueueUrl
-      Resource: "arn:aws:sqs:us-east-1:516773109411:fiap-lab-trabalho-final-dev"
+      Resource: "arn:aws:sqs:us-east-1:*:fiap-lab-trabalho-final-principal*"
 
 functions:
   sqsHandler:

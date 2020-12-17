@@ -6,7 +6,7 @@ def handler(event, context):
     
     sqs = boto3.resource('sqs')
     
-    queue = sqs.get_queue_by_name(QueueName='fiap-lab-trabalho-final-dev')
+    queue = sqs.get_queue_by_name(QueueName='fiap-lab-trabalho-final-principal-dev')
     response = queue.send_message(MessageBody=usuario)
     
     print(response.get('MessageId'))

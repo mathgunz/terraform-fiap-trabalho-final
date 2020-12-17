@@ -1,6 +1,16 @@
 terraform/S3/.terraform
+terraform/S3/terraform.tfstate
+
 terraform/SNS/.terraform
+terraform/SNS/terraform.tfstate
+
 terraform/SQS/.terraform
+terraform/SQS/terraform.tfstate
+
 terraform/Workspaces/.terraform
+terraform/terraform_0.12.23_linux_amd64.zip
+
+
+
 microservices/lambda-gateway/layer
 microservices/lambda-gateway/.serverless
