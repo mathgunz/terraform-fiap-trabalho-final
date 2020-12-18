@@ -12,12 +12,18 @@ provider:
         - sqs:ReceiveMessage
         - sqs:SendMessage
         - sqs:GetQueueUrl
-      Resource: "arn:aws:sqs:us-east-1:516773109411:fiap-lab-trabalho-final-principal-dev"
+      Resource: "arn:aws:sqs:us-east-1:*:fiap-lab-trabalho-final-principal*"
 
 functions:
-  readCustomer:
-    handler: handler.handler
+  buscarUsuario:
+    handler: handler.buscarUsuario
     events:
       - http:
           path: usuarios/{usuario}
           method: get
+  criarUsuario:
+    handler: handler.criarUsuario
+    events:
+      - http:
+          path: usuarios
+          method: post

@@ -13,7 +13,7 @@ provider:
         - sqs:ReceiveMessage
         - sqs:SendMessage
         - sqs:GetQueueUrl
-      Resource: "arn:aws:sqs:us-east-1:*:fiap-lab-trabalho-final-principal*"
+      Resource: "arn:aws:sqs:us-east-1:516773109411:fiap-lab-trabalho-final-principal-dev"
 
 functions:
   sqsHandler:
