@@ -13,16 +13,38 @@ provider:
         - sqs:SendMessage
         - sqs:GetQueueUrl
       Resource: "arn:aws:sqs:us-east-1:*:fiap-lab-trabalho-final-principal*"
+    - Effect: "Allow" # xray permissions (required)
+      Action:
+        - "xray:PutTraceSegments"
+        - "xray:PutTelemetryRecords"
+      Resource:
+        - "*"
+  tracing:
+    apiGateway: true
+    lambda: true
+    
+package:
+  exclude:
+    - layer/++
+
+layers:
+  LayerDependencies:
+    path: layer
+    description: "learning layers"
 
 functions:
   buscarUsuario:
     handler: handler.buscarUsuario
+    layers:
+      - {Ref: LayerDependenciesLambdaLayer}
     events:
       - http:
           path: usuarios/{usuario}
           method: get
   criarUsuario:
     handler: handler.criarUsuario
+    layers:
+      - {Ref: LayerDependenciesLambdaLayer}
     events:
       - http:
           path: usuarios

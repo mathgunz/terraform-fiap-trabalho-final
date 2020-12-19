@@ -17,9 +17,28 @@ provider:
       Action:
         - sns:Publish
       Resource: "arn:aws:sns:us-east-1:*:lab-fiap-trabalho-final-topico*"
+    - Effect: "Allow" # xray permissions (required)
+      Action:
+        - "xray:PutTraceSegments"
+        - "xray:PutTelemetryRecords"
+      Resource:
+        - "*"
+  tracing:
+    lambda: true
+
+package:
+  exclude:
+    - layer/++
+
+layers:
+  LayerDependencies:
+    path: layer
+    description: "learning layers"
 
 functions:
   snsHandler:
     handler: handler.handler
     events:
       - sqs: arn:aws:sqs:us-east-1:516773109411:fiap-lab-trabalho-final-principal-dev-DLQ
+    layers:
+      - {Ref: LayerDependenciesLambdaLayer}

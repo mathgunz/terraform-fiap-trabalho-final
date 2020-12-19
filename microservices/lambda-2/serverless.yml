@@ -13,9 +13,28 @@ provider:
         - sqs:SendMessage
         - sqs:GetQueueUrl
       Resource: "arn:aws:sqs:us-east-1:516773109411:fiap-lab-trabalho-final-principal-dev"
+    - Effect: "Allow" # xray permissions (required)
+      Action:
+        - "xray:PutTraceSegments"
+        - "xray:PutTelemetryRecords"
+      Resource:
+        - "*"
+  tracing:
+    lambda: true
+    
+package:
+  exclude:
+    - layer/++
+
+layers:
+  LayerDependencies:
+    path: layer
+    description: "learning layers"
 
 functions:
   sqsHandler:
     handler: handler.handler
     events:
       - sqs: arn:aws:sqs:us-east-1:516773109411:fiap-lab-trabalho-final-principal-dev
+    layers:
+      - {Ref: LayerDependenciesLambdaLayer}
