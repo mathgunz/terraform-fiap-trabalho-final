@@ -1,5 +1,8 @@
 service: trabalho-fiap-lambda-1
 
+custom:
+  stage: ${opt:stage, self:provider.stage}
+
 provider:
   name: aws
   stage: dev
@@ -22,6 +25,8 @@ provider:
   tracing:
     apiGateway: true
     lambda: true
+  environment:
+      sqs_url_dest: fiap-lab-trabalho-final-principal-${self:custom.stage}
     
 package:
   exclude:

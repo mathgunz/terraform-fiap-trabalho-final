@@ -1,5 +1,8 @@
 service: trabalho-fiap-lambda-2
 
+custom:
+  stage: ${opt:stage, self:provider.stage}
+
 provider:
   name: aws
   stage: dev
@@ -12,7 +15,7 @@ provider:
         - sqs:ReceiveMessage
         - sqs:SendMessage
         - sqs:GetQueueUrl
-      Resource: "arn:aws:sqs:us-east-1:516773109411:fiap-lab-trabalho-final-principal-dev"
+      Resource: "arn:aws:sqs:us-east-1:*:fiap-lab-trabalho-final-principal*"
     - Effect: "Allow" # xray permissions (required)
       Action:
         - "xray:PutTraceSegments"
@@ -35,6 +38,6 @@ functions:
   sqsHandler:
     handler: handler.handler
     events:
-      - sqs: arn:aws:sqs:us-east-1:516773109411:fiap-lab-trabalho-final-principal-dev
+      - sqs: arn:aws:sqs:us-east-1:516773109411:fiap-lab-trabalho-final-principal-${self:custom.stage}
     layers:
       - {Ref: LayerDependenciesLambdaLayer}

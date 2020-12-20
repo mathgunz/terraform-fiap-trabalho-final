@@ -1,5 +1,8 @@
 service: trabalho-fiap-lambda-3
 
+custom:
+  stage: ${opt:stage, self:provider.stage}
+
 provider:
   name: aws
   stage: dev
@@ -25,6 +28,9 @@ provider:
         - "*"
   tracing:
     lambda: true
+  environment:
+      sns_url_dest: arn:aws:sns:us-east-1:516773109411:lab-fiap-trabalho-final-topico-${self:custom.stage}
+      sqs_url: https://sqs.us-east-1.amazonaws.com/516773109411/fiap-lab-trabalho-final-principal-${self:custom.stage}-DLQ
 
 package:
   exclude:
@@ -39,6 +45,6 @@ functions:
   snsHandler:
     handler: handler.handler
     events:
-      - sqs: arn:aws:sqs:us-east-1:516773109411:fiap-lab-trabalho-final-principal-dev-DLQ
+      - sqs: arn:aws:sqs:us-east-1:516773109411:fiap-lab-trabalho-final-principal-${self:custom.stage}-DLQ
     layers:
       - {Ref: LayerDependenciesLambdaLayer}

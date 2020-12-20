@@ -1,6 +1,8 @@
 import sys
 sys.path.insert(0, '/opt')
 
+from env import Variables
+
 from sqsHandler import SqsHandler
 from snsHandler import SnsHandler
 
@@ -12,12 +14,14 @@ patch_all()
 
 def handler(event, context):
     
-    sqs = SqsHandler('https://sqs.us-east-1.amazonaws.com/516773109411/fiap-lab-trabalho-final-principal-dev-DLQ');
+    env = Variables();
+    
+    sqs = SqsHandler(env.get_sqs_url());
         
     print('Recebendo DLQ')
     print(event['Records'][0]['body'])
         
-    sns = SnsHandler('arn:aws:sns:us-east-1:516773109411:lab-fiap-trabalho-final-topico-dev');
+    sns = SnsHandler(env.get_sns_url_dest());
     response = sns.publish(event['Records'][0]['body']);
     print(response)
     
